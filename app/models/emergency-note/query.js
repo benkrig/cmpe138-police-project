@@ -1,7 +1,7 @@
 import { generateSet } from "../util";
 
 export const createEmergencyNote = (emergencyId, note, eId, createdAt) =>
-  `INSERT INTO emergency_note VALUES (${emergencyId}, ${note}, ${eId}, ${Date.now()})`;
+  `INSERT INTO emergency_note VALUES (${emergencyId}, ${note}, ${eId}, NOW()})`;
 
 export const readEmergencyNote = (emergencyId) =>
   `SELECT * FROM emergency_note WHERE emergency_id = ${emergencyId}`;

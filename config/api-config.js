@@ -1,8 +1,8 @@
 import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
-import { dbFunc } from "./db-function";
 import { UserRoute } from "../app/routes/user.route";
+import { EmergencyRoute } from "../app/routes/emergency.route";
 
 const app = express();
 const router = express.Router();
@@ -28,7 +28,9 @@ app.use((err, req, res) => {
   res.status(500).send("Something broke!");
 });
 
+EmergencyRoute.init(router);
 UserRoute.init(router);
+
 
 export const ApiConfig = {
   app: app,
