@@ -21,7 +21,7 @@
         "react"
     ],
     "rules": {
-        "max-len": ["error", { "code": 90 }],
+        "max-len": ["error", { "code": 120 }],
         "require-jsdoc": ["error", {
             "require": {
                 "FunctionDeclaration": false,

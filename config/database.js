@@ -1,12 +1,10 @@
 const mysql = require("mysql");
 
-export const Db = mysql.createPool({
+export const db = mysql.createPool({
   connectionLimit: 100,
   host: "localhost",
   user: "root",
-  password: "",
+  password: "root",
   database: "sampleDB",
 });
-
-export const db = () => Db;
 

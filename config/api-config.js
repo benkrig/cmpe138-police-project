@@ -7,11 +7,6 @@ import { UserRoute } from "../app/routes/user.route";
 const app = express();
 const router = express.Router();
 
-dbFunc.connectionCheck.then((data) =>{
-  console.log(data);
-}).catch((err) => {
-  console.log(err);
-});
 
 // CORS
 app.use((req, res, next) => {
@@ -32,8 +27,6 @@ app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
-
-app.router.route("/user").get((req, res) => res.send("hello world"));
 
 UserRoute.init(router);
 
