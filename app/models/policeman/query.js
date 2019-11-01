@@ -2,7 +2,7 @@ import { generateSet } from "../util";
 
 
 export const createPoliceman = (pid, pstatus, pzipcode) =>
-	`INSERT INTO policeman VALUE (${pid}, ${pstatus}, ${pzipcode})`;
+	`INSERT INTO policeman VALUE (${pid}, '${pstatus}', ${pzipcode})`;
 
 export const readPoliceman = (pid) =>
 	`SELECT * FROM policeman WHERE p_id = ${pid}`;
