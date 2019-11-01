@@ -1,6 +1,6 @@
 import { generateSet } from "../util";
 
-export const createEmergencyNote = (emergencyId, note, eId, createdAt) =>
+export const createEmergencyNote = (emergencyId, note, eId) =>
   `INSERT INTO emergency_note VALUES (${emergencyId}, ${note}, ${eId}, NOW()})`;
 
 export const readEmergencyNote = (emergencyId) =>
