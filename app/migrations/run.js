@@ -8,23 +8,15 @@ const Up = async () => {
     password: "root",
   });
 
-  await con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    con.query("CREATE DATABASE if not exists police;", function(err, result) {
-      if (err) throw err;
-      console.log("Database created");
-    });
-  });
-
   await fs.readFile(__dirname + "/001_init.sql", "utf8", (err, sql) => {
-    const cleanSQL = sql.replace(/(\r\n|\n|\r)/gm, "");
-    con.query(cleanSQL, (error, rows) => {
-      console.log(error, rows);
-      con.end();
+    const cleanSQL = sql.replace(/(\r\n|\n|\r|\t)/gm, " ");
+    cleanSQL.split(";").forEach((q) => {
+      console.log(q);
+      con.query(`${q};`, (error, rows) => {
+        console.log(error, rows);
+      });
     });
   });
-
 };
 
 export const Mig = {

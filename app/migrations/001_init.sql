@@ -1,8 +1,7 @@
-drop database if exists PoliceReport;
-create database PoliceReport;
+create database if not exists PoliceReport;
 use PoliceReport;
 
-CREATE TABLE employee(
+CREATE TABLE if not exists employee(
 						e_id 		INTEGER NOT NULL,
 						e_fname 	VARCHAR(20) NOT NULL,
 						e_lname 	VARCHAR(20) NOT NULL,
@@ -10,11 +9,11 @@ CREATE TABLE employee(
 						e_type 		VARCHAR(20) NOT NULL,
 						e_username 	VARCHAR(20) NOT NULL,
 						e_password 	VARCHAR(20) NOT NULL,
-						e_phone 	INTEGER NOT NULL,
+						e_phone 	BIGINT NOT NULL,
 						primary key (e_id)
 					);
 
-CREATE TABLE policeman(
+CREATE TABLE if not exists policeman(
 						p_id 		INTEGER NOT NULL,
 						p_status 	VARCHAR(20) NOT NULL,
 						p_zipcode	INTEGER,
@@ -22,7 +21,7 @@ CREATE TABLE policeman(
 						foreign key	(p_id) references employee(e_id)
 					);
 
-CREATE TABLE emergency(
+CREATE TABLE if not exists emergency(
 						emergency_id INTEGER NOT NULL,
 						emergency_status VARCHAR(20) NOT NULL,
 						emergency_lead_responder INTEGER NOT NULL,
@@ -31,14 +30,14 @@ CREATE TABLE emergency(
 						emergency_ended_at VARCHAR(20),
 						primary key (emergency_id)
 					);
-				
-CREATE TABLE emergency_responder(
+
+CREATE TABLE if not exists emergency_responder(
 									emergency_id 	INTEGER NOT NULL,
 									e_id 			INTEGER NOT NULL,
 									started 		VARCHAR(20) NOT NULL
 							);
-							
-CREATE TABLE emergency_note(
+
+CREATE TABLE if not exists emergency_note(
 							note_id INTEGER NOT NULL,
 							emergency_id INTEGER NOT NULL,
 							node CHAR NOT NULL,
@@ -47,15 +46,15 @@ CREATE TABLE emergency_note(
 						);
 
 
-						
+
 INSERT  employee VALUES
 (1, 'Jack', 'Ma', 30, 'ADMIN', 'jackma@gmail.com', '100', 911),
 (2, 'Hi', 'Yes', 31, 'CALL_OPERATOR', 'hiyes@gmail.com', '101', 911911),
 (3, 'Apple', 'Jose', 32, 'POLICE', 'applejose@gmail.com', '102', 911911911),
-(4, 'Ok', 'Hello', 33, 'POLICE', 'okhello@gmail.com', '103', 911911911911);			
+(4, 'Ok', 'Hello', 33, 'POLICE', 'okhello@gmail.com', '103', 4081235436);
 
 INSERT policeman(p_id, p_status) VALUE
 (3, 'FREE'),
 (4, 'FREE');
 
-	
+
