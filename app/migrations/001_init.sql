@@ -2,7 +2,7 @@ create database if not exists PoliceReport;
 use PoliceReport;
 
 CREATE TABLE if not exists employee(
-						e_id 		INTEGER NOT NULL,
+						e_id 		INTEGER NOT NULL AUTO_INCREMENT,
 						e_fname 	VARCHAR(20) NOT NULL,
 						e_lname 	VARCHAR(20) NOT NULL,
 						e_age 		INTEGER NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE if not exists policeman(
 					);
 
 CREATE TABLE if not exists emergency(
-						emergency_id INTEGER NOT NULL,
+						emergency_id INTEGER NOT NULL AUTO_INCREMENT,
 						emergency_status VARCHAR(20) NOT NULL,
 						emergency_lead_responder INTEGER NOT NULL,
 						emergency_zipcode INTEGER NOT NULL,
