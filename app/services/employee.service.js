@@ -1,5 +1,6 @@
 import { employeeModel } from "../models/employee/employee.model";
 import { checkPassword } from "../../common/hash";
+import { generateJWTToken } from "../../common/jwt";
 
 const createEmployee = async (params) => {
   try {
@@ -38,12 +39,17 @@ const signIn = async (params) => {
       };
     }
 
-    // TODO: add JWT to response
-
     // remove password and return employee
     const employee = rows[0];
     delete employee.password;
-    return { status: 200, data: { ...employee } };
+
+    return {
+      status: 200,
+      data: {
+        jwt: generateJWTToken({ ...employee }), // add JWT to response
+        ...employee,
+      },
+    };
   } catch (e) {
     return { status: 500, data: { employee: {}, error: e.toString() } };
   }

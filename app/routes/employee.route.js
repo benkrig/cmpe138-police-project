@@ -1,11 +1,14 @@
-import { checkPassword, encryptPassword } from "../../common/hash";
+import { encryptPassword } from "../../common/hash";
 import { employeeService } from "../services/employee.service";
-
-// Middleware
+import { authenticate } from "../middleware/auth-mw";
+import { example } from "../middleware/example-mw";
 
 const init = (router) => {
-  router.route("/employee").post(createEmployee);
+  router.route("/employee").post(authenticate, createEmployee);
   router.route("/login").post(signIn);
+
+  // example route
+  router.route("/test").post(example, authenticate, (req, res) => res.status(200).send({}));
 };
 
 const createEmployee = async (req, res) => {

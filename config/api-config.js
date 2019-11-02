@@ -23,9 +23,12 @@ app.use("/api", router);
 app.use(express.static(path.join(__dirname, "public")));
 
 // Error handler
-app.use((err, req, res) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
+app.use((err, req, res, next) => {
+  if (err.name === "JWT") { // Send the error rather than to show it on the console
+    res.status(401).send(err);
+  } else {
+    next(err);
+  }
 });
 
 EmployeeRoute.init(router);
