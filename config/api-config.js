@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
 import { EmergencyRoute } from "../app/routes/emergency.route";
+import { EmployeeRoute } from "../app/routes/employee.route";
 
 const app = express();
 const router = express.Router();
@@ -27,6 +28,7 @@ app.use((err, req, res) => {
   res.status(500).send("Something broke!");
 });
 
+EmployeeRoute.init(router);
 EmergencyRoute.init(router);
 
 export const ApiConfig = {

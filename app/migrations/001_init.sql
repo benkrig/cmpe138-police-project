@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS employee(
     lname 	    VARCHAR(20) NOT NULL,
     dob         DATE NOT NULL,        /* dob = Date Of Birth */
     type 		VARCHAR(20) NOT NULL,
-    username 	VARCHAR(20) NOT NULL,
-    password 	VARCHAR(20) NOT NULL,
+    username 	VARCHAR(255) NOT NULL UNIQUE,
+    password 	VARCHAR(255) NOT NULL,
     phone 	    VARCHAR(15) NOT NULL, /* E.164 format https://en.wikipedia.org/wiki/E.164 */
     PRIMARY KEY (e_id)
 );
