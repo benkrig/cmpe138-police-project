@@ -1,7 +1,20 @@
-// TODO Add JWT authentication middleware
+import { getToken, verifyToken } from "../../common/jwt";
 
-// noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
-export const authenticate = (req, res, next) => {
-  // If JWT is valid next()
-  // Else res.send(err)
+export const authenticate = async (req, res, next) => {
+  const token = getToken(req.headers);
+  const verified = verifyToken(token);
+
+  if (!token) {
+    next({
+      name: "JWT",
+      message: "JWT Missing",
+    });
+  } else if (!verified) {
+    next({
+      name: "JWT",
+      message: "JWT Invalid",
+    });
+  } else {
+    next();
+  }
 };
