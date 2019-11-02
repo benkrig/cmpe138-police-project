@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
-import { UserRoute } from "../app/routes/user.route";
 import { EmergencyRoute } from "../app/routes/emergency.route";
 
 const app = express();
@@ -29,8 +28,6 @@ app.use((err, req, res) => {
 });
 
 EmergencyRoute.init(router);
-UserRoute.init(router);
-
 
 export const ApiConfig = {
   app: app,
