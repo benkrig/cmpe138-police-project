@@ -1,8 +1,9 @@
-const mysql = require("mysql");
+import mysql from "mysql";
+import util from "util";
 
 const Database = process.env.DB_NAME || "PoliceReport";
 
-export const db = mysql.createPool({
+const DB = mysql.createPool({
   connectionLimit: 100,
   host: "localhost",
   user: "root",
@@ -10,3 +11,6 @@ export const db = mysql.createPool({
   database: Database,
 });
 
+DB.query = util.promisify(DB.query);
+
+export const db = DB;

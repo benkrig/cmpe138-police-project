@@ -1,11 +1,19 @@
-export const createEmployee = (e_id, e_firstName, e_lastName, e_age, e_type, e_username, e_password, e_phone ) =>
-  `INSERT INTO employee VALUES (${e_id}, '${e_firstName}', '${e_lastName}', ${e_age}, '${e_type}', '${e_username}', '${e_password}', ${e_phone})`;
+import { generateSet } from "../util";
 
-export const readEmployee = (e_id) =>
-  `SELECT * FROM employee WHERE employee_id = ${e_id}`;
+export const createEmployee = (firstName, lastName, dob, type,
+    username, password, phone) =>
+  `INSERT INTO employee(fname, lname, dob, type, username, password, phone) \
+  VALUES ('${firstName}', '${lastName}', '${dob}', '${type}', '${username}', \
+  '${password}', '${phone}')`;
 
-export const updateEmployee = (e_id, columns, values) =>
-  `UPDATE employee SET ${generateSet(columns, values)} WHERE employee_id = ${e_id}`;
+export const readEmployee = (eid) =>
+  `SELECT * FROM employee WHERE e_id = ${eid}`;
 
-export const deleteEmergency = (e_id) => `DELETE FROM employee WHERE employee_id = ${e_id}`;
+export const selectEmployeeByUsername = (username) =>
+  `SELECT * FROM employee WHERE username = '${username}' LIMIT 1`;
+
+export const updateEmployee = (eid, columns, values) =>
+  `UPDATE employee SET ${generateSet(columns, values)} WHERE e_id = ${eid}`;
+
+export const deleteEmployee = (eid) => `DELETE FROM employee WHERE e_id = ${eid}`;
 
