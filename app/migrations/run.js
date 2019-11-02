@@ -2,6 +2,8 @@ import fs from "fs";
 const mysql = require("mysql");
 
 const Up = async () => {
+  console.log("Running migration...");
+
   const con = await mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -11,12 +13,17 @@ const Up = async () => {
   await fs.readFile(__dirname + "/001_init.sql", "utf8", (err, sql) => {
     const cleanSQL = sql.replace(/(\r\n|\n|\r|\t)/gm, " ");
     cleanSQL.split(";").forEach((q) => {
-      console.log(q);
-      con.query(`${q};`, (error, rows) => {
-        console.log(error, rows);
-      });
+      if (q !== " ") {
+        con.query(`${q};`, (error, rows) => {
+          if (error) {
+            console.log(error, rows);
+          }
+        });
+      }
     });
   });
+
+  console.log("Migration completed...");
 };
 
 export const Mig = {

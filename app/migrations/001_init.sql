@@ -1,60 +1,63 @@
-create database if not exists PoliceReport;
-use PoliceReport;
+CREATE DATABASE IF NOT EXISTS PoliceReport;
 
-CREATE TABLE if not exists employee(
-						e_id 		INTEGER NOT NULL AUTO_INCREMENT,
-						e_fname 	VARCHAR(20) NOT NULL,
-						e_lname 	VARCHAR(20) NOT NULL,
-						e_age 		INTEGER NOT NULL,
-						e_type 		VARCHAR(20) NOT NULL,
-						e_username 	VARCHAR(20) NOT NULL,
-						e_password 	VARCHAR(20) NOT NULL,
-						e_phone 	BIGINT NOT NULL,
-						primary key (e_id)
-					);
+USE PoliceReport;
 
-CREATE TABLE if not exists policeman(
-						p_id 		INTEGER NOT NULL,
-						p_status 	VARCHAR(20) NOT NULL,
-						p_zipcode	INTEGER,
-						primary key (p_id),
-						foreign key	(p_id) references employee(e_id)
-					);
+CREATE TABLE IF NOT EXISTS employee(
+    e_id INTEGER NOT NULL AUTO_INCREMENT,
+    fname       VARCHAR(20) NOT NULL,
+    lname 	    VARCHAR(20) NOT NULL,
+    dob         DATE NOT NULL,        /* dob = Date Of Birth */
+    type 		VARCHAR(20) NOT NULL,
+    username 	VARCHAR(20) NOT NULL,
+    password 	VARCHAR(20) NOT NULL,
+    phone 	    VARCHAR(15) NOT NULL, /* E.164 format https://en.wikipedia.org/wiki/E.164 */
+    PRIMARY KEY (e_id)
+);
 
-CREATE TABLE if not exists emergency(
-						emergency_id INTEGER NOT NULL AUTO_INCREMENT,
-						emergency_status VARCHAR(20) NOT NULL,
-						emergency_lead_responder INTEGER NOT NULL,
-						emergency_zipcode INTEGER NOT NULL,
-						emergency_started_at VARCHAR(20),
-						emergency_ended_at VARCHAR(20),
-						primary key (emergency_id)
-					);
+CREATE TABLE IF NOT EXISTS policeman(
+    p_id    INTEGER NOT NULL,
+    status 	VARCHAR(20) NOT NULL,
+    zipcode	VARCHAR(5)  NOT NULL,
+    PRIMARY KEY (p_id),
+    FOREIGN KEY	(p_id) REFERENCES employee(e_id)
+);
 
-CREATE TABLE if not exists emergency_responder(
-									emergency_id 	INTEGER NOT NULL,
-									e_id 			INTEGER NOT NULL,
-									started 		VARCHAR(20) NOT NULL
-							);
+CREATE TABLE IF NOT EXISTS emergency(
+    emergency_id    INTEGER NOT NULL AUTO_INCREMENT,
+    status          VARCHAR(20) NOT NULL,
+    lead_responder  INTEGER,
+    zipcode	        VARCHAR(5) NOT NULL,
+    started_at      DATETIME NOT NULL,
+    ended_at        DATETIME,
+    PRIMARY KEY (emergency_id),
+    FOREIGN KEY	(lead_responder) REFERENCES policeman(p_id)
+);
 
-CREATE TABLE if not exists emergency_note(
-							note_id INTEGER NOT NULL,
-							emergency_id INTEGER NOT NULL,
-							node CHAR NOT NULL,
-							e_id INTEGER NOT NULL,
-							created_at VARCHAR(20) NOT NULL
-						);
+CREATE TABLE IF NOT EXISTS emergency_responder(
+    emergency_id    INTEGER NOT NULL,
+    e_id            INTEGER NOT NULL,
+    started         DATETIME NOT NULL,
+    FOREIGN KEY	(emergency_id) REFERENCES emergency(emergency_id),
+    FOREIGN KEY	(e_id) REFERENCES employee(e_id)
+);
 
+CREATE TABLE IF NOT EXISTS emergency_note(
+    note_id INTEGER NOT NULL AUTO_INCREMENT,
+    emergency_id INTEGER NOT NULL,
+    note VARCHAR(255) NOT NULL,
+    e_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    PRIMARY KEY (note_id),
+    FOREIGN KEY	(emergency_id) REFERENCES emergency(emergency_id),
+    FOREIGN KEY	(e_id) REFERENCES employee(e_id)
+);
 
+INSERT IGNORE employee VALUES
+(1, 'Jack', 'Ma', '1990-09-01', 'ADMIN', 'jackma@gmail.com', '100', '911'),
+(2, 'Hi', 'Yes', '1990-09-02', 'CALL_OPERATOR', 'hiyes@gmail.com', '101', '911911'),
+(3, 'Apple', 'Jose', '1990-09-03', 'POLICE', 'applejose@gmail.com', '102', '911911911'),
+(4, 'Ok', 'Hello', '1990-09-04', 'POLICE', 'okhello@gmail.com', '103', '4081235436');
 
-INSERT  employee VALUES
-(1, 'Jack', 'Ma', 30, 'ADMIN', 'jackma@gmail.com', '100', 911),
-(2, 'Hi', 'Yes', 31, 'CALL_OPERATOR', 'hiyes@gmail.com', '101', 911911),
-(3, 'Apple', 'Jose', 32, 'POLICE', 'applejose@gmail.com', '102', 911911911),
-(4, 'Ok', 'Hello', 33, 'POLICE', 'okhello@gmail.com', '103', 4081235436);
-
-INSERT policeman(p_id, p_status) VALUE
-(3, 'FREE'),
-(4, 'FREE');
-
-
+INSERT IGNORE policeman(p_id, status, zipcode) VALUE
+(3, 'FREE', '95123'),
+(4, 'FREE', '95136');
