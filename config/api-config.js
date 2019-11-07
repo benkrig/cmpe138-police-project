@@ -12,7 +12,7 @@ const router = express.Router();
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
@@ -23,11 +23,18 @@ app.use("/api", router);
 app.use(express.static(path.join(__dirname, "public")));
 
 // Error handler
-app.use((err, req, res, next) => {
-  if (err.name === "JWT") { // Send the error rather than to show it on the console
-    res.status(401).send(err);
-  } else {
-    next(err);
+app.use((err, req, res) => {
+  if (err) {
+    switch (err.name) {
+      case "JWT": {
+        res.status(401).send(err);
+        break;
+      }
+      default: {
+        console.log(req);
+        res.status(500).send(err);
+      }
+    }
   }
 });
 
