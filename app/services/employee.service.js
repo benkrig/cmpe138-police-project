@@ -21,6 +21,30 @@ const createEmployee = async (params) => {
   }
 };
 
+const getEmployee = async (params) => {
+  try { // validate employee exists
+    const rows = await employeeModel.getEmployeeByUsername(params);
+    if (rows.length === 0) {
+      return { status: 400, data: { employee: {},
+        error: "Invalid username or password!" },
+      };
+    }
+
+    // remove password and return employee
+    const employee = rows[0];
+    delete employee.password;
+
+    return {
+      status: 200,
+      data: {
+        employee: employee,
+      },
+    };
+  } catch (e) {
+    return { status: 500, data: { employee: {}, error: e.toString() } };
+  }
+};
+
 const signIn = async (params) => {
   try {
     // validate employee exists
@@ -47,7 +71,7 @@ const signIn = async (params) => {
       status: 200,
       data: {
         jwt: generateJWTToken({ ...employee }), // add JWT to response
-        ...employee,
+        employee: employee,
       },
     };
   } catch (e) {
@@ -57,5 +81,6 @@ const signIn = async (params) => {
 
 export const employeeService = {
   createEmployee: createEmployee,
+  getEmployee: getEmployee,
   signIn: signIn,
 };
