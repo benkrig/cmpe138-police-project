@@ -26,4 +26,18 @@ export const employeeModel = {
       throw e;
     }
   },
+
+
+  // from the employee query.js call the 
+  getEmployeeCountNumber: async() => {
+    try{
+      return await db.query(
+        getEmplyeeCount()
+      );
+    } catch(e){
+      console.log(e.toString());
+    }
+  },
+
+  
 };

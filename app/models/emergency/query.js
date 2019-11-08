@@ -4,6 +4,12 @@ export const createEmergency = (status, leadResponder, zipcode) =>
   `INSERT INTO emergency(status, lead_responder, zipcode, started_at) \
   VALUES ('${status}', ${leadResponder || "NULL"}, '${zipcode}', NOW())`;
 
+export const getEmergencyCaseInProcessNum = () =>
+  `SELECT count(*) FROM emergency WHERE ended_at IS NULL`;
+
+export const getEmergencyCaseCompletedNum = () =>
+  `SELECT count(*) FROM emergency WHERE ended_at IS NOT NULL`;
+
 export const readEmergency = (emergencyId) =>
   `SELECT * FROM emergency WHERE emergency_id = ${emergencyId}`;
 
