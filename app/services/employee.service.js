@@ -72,8 +72,6 @@ const getEmployee = async (params) => {
       };
     }
 
-
-
     // remove password and return employee
     const employee = rows[0];
     delete employee.password;
