@@ -18,8 +18,23 @@ const createEmergency = async (params) => {
     return { status: 500, error: "there was a problem" };
   }
 };
-
-
+/*
+const getEmergencyCaseInProcessNum = async() =>{
+  try{
+    const rowDashBoard = await emergencyModel.getEmergencyCaseInProcessNum();
+    return {
+      status: 200,
+      data: {
+        emergency: {
+          employeeNum: rowDashBoard.
+        }
+      }
+    }
+  }catch(e){
+    return {status: 500, error: "there was a problem"};
+  }
+}
+*/
 export const emergencyService = {
   createEmergency: createEmergency,
 };
