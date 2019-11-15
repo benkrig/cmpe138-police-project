@@ -21,6 +21,48 @@ const createEmployee = async (params) => {
   }
 };
 
+const updateEmployee = async (params) => {
+  try {
+    // TODO: if password
+    const rows = await employeeModel.updateEmployee(params);
+    console.log(rows);
+
+    return {
+      status: 200,
+      data: {
+        employee: {
+          ...params,
+        },
+        message: "Employee updated!",
+      },
+    };
+  } catch (e) {
+    return { status: 500, data: { employee: {}, error: e.toString() } };
+  }
+};
+
+const getEmployees = async () => {
+  try {
+    const rows = await employeeModel.getEmployees();
+    console.log(rows);
+
+    // remove password and return employees
+    rows.forEach((row) => {
+      delete row.password;
+      return row;
+    });
+
+    return {
+      status: 200,
+      data: {
+        employees: rows,
+      },
+    };
+  } catch (e) {
+    return { status: 500, data: { employees: {}, error: e.toString() } };
+  }
+};
+
 const getEmployee = async (params) => {
   try { // validate employee exists
     const rows = await employeeModel.getEmployeeByUsername(params);
@@ -29,6 +71,8 @@ const getEmployee = async (params) => {
         error: "Invalid username or password!" },
       };
     }
+
+
 
     // remove password and return employee
     const employee = rows[0];
@@ -81,6 +125,8 @@ const signIn = async (params) => {
 
 export const employeeService = {
   createEmployee: createEmployee,
-  getEmployee: getEmployee,
+  getEmployees: getEmployees, // retrieve ALL employees (MANY)
+  getEmployee: getEmployee, // retrieve SPECIFIC employee (1)
   signIn: signIn,
+  updateEmployee: updateEmployee,
 };

@@ -1,7 +1,8 @@
 
 // Returns a string in the format: "column[i] = value[i] for each column and value"
-export const generateSet = (columns, values) =>
-  columns.forEach(columns, (col, i) => {
+export const generateSet = (columns, values) => {
+  let set = "";
+  columns.forEach((col, i) => {
     // if the column is a string, we need to wrap the value with ''
     const value = typeof values[i] === "string" ? `'${values[i]}'` : values[i];
 
@@ -9,5 +10,8 @@ export const generateSet = (columns, values) =>
     if (i !== columns.length - 1) {
       m += ", ";
     }
-    return m;
+    set = set + m;
   });
+  console.log(set);
+  return set;
+};
