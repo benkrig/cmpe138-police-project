@@ -23,7 +23,6 @@ const createEmployee = async (params) => {
 
 const updateEmployee = async (params) => {
   try {
-    // TODO: if password
     const rows = await employeeModel.updateEmployee(params);
     console.log(rows);
 

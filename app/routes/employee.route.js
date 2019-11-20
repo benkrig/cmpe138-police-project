@@ -58,6 +58,7 @@ const validJWT = async (req, res) => {
 };
 
 const updateEmployee = async (req, res) => {
+  console.log(req.body);
   const params = {
     eid: req.body.eid,
     firstName: req.body.firstName,
