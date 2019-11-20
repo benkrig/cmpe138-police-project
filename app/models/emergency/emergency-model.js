@@ -55,5 +55,16 @@ export const emergencyModel = {
       console.log(e);
       throw e;
     }
-  }
+  },
+    assignLead: async (params) => {
+      try {
+        const { leadResponder, emergencyId } = params;
+
+        const { rows, err } = await db.query(assignLead(leadResponder, emergencyId));
+        return { rows, err };
+      } catch (e) {
+        console.log(e.toString());
+        throw e;
+      }
+    }
 };
