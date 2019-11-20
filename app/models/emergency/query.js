@@ -24,3 +24,6 @@ export const updateEmergency = (emergencyId, columns, values) =>
 
 export const deleteEmergency = emergencyId => `DELETE FROM emergency \
   WHERE emergency_id = ${emergencyId}`;
+
+export const assignLead = (leadResponder, emergencyID) =>
+  `UPDATE emergency SET lead_responder = ${leadResponder} WHERE emergency_id = ${emergencyID}`;
