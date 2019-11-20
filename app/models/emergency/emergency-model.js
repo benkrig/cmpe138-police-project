@@ -1,32 +1,59 @@
-import { createEmergency } from "./query";
+import { createEmergency, getAllEmergencies, updateEmergency } from "./query";
 import { db } from "../../../config/database";
 
 export const emergencyModel = {
-  createEmergency: async (params) => {
+  createEmergency: async params => {
     try {
-      const { status, leadResponder, zipCode } = params;
-      console.log(createEmergency(status, leadResponder, zipCode));
+      const { status, leadResponder, zipCode, startedAt } = params;
 
-      return await db.query(createEmergency(status, leadResponder, zipCode));
+      return db.query(
+        createEmergency(status, leadResponder, zipCode, startedAt)
+      );
     } catch (e) {
       console.log(e.toString());
       throw e;
     }
   },
   getEmergencyCaseInProcessNum: async => {
-    try{
-      return await db.query(getEmergencyCaseInProcessNum());
-    }catch(e){
+    try {
+      return db.query(getEmergencyCaseInProcessNum());
+    } catch (e) {
       console.log(e.toString());
       throw e;
     }
   },
-  getEmergencyCaseCompletedNum: async =>{
-    try{
-      return await db.query(getEmergencyCaseCompletedNum());
-    }catch(e){
+  getEmergencies: async () => {
+    try {
+      return db.query(getAllEmergencies());
+    } catch (e) {
       console.log(e.toString());
       throw e;
     }
   },
+  getEmergencyCaseCompletedNum: async => {
+    try {
+      return db.query(getEmergencyCaseCompletedNum());
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
+    }
+  },
+  resolveEmergency: async params => {
+    try {
+      const { emergency_id } = params;
+      const cols = ["status", "ended_at"];
+      const vals = [
+        "RESOLVED",
+        new Date()
+          .toJSON()
+          .substring(0, 19)
+          .replace("T", " ")
+      ];
+
+      return db.query(updateEmergency(emergency_id, cols, vals));
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
 };

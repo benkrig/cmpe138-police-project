@@ -10,11 +10,17 @@ export const getEmergencyCaseInProcessNum = () =>
 export const getEmergencyCaseCompletedNum = () =>
   `SELECT count(*) FROM emergency WHERE ended_at IS NOT NULL`;
 
-export const readEmergency = (emergencyId) =>
+export const readEmergency = emergencyId =>
   `SELECT * FROM emergency WHERE emergency_id = ${emergencyId}`;
 
-export const updateEmergency = (emergencyId, columns, values) =>
-  `UPDATE emergency SET ${generateSet(columns, values)} WHERE emergency_id = ${emergencyId}`;
+export const getAllEmergencies = () =>
+  `SELECT * FROM emergency LEFT JOIN employee on lead_responder = e_id`;
 
-export const deleteEmergency = (emergencyId) => `DELETE FROM emergency \
+export const updateEmergency = (emergencyId, columns, values) =>
+  `UPDATE emergency SET ${generateSet(
+    columns,
+    values
+  )} WHERE emergency_id = ${emergencyId}`;
+
+export const deleteEmergency = emergencyId => `DELETE FROM emergency \
   WHERE emergency_id = ${emergencyId}`;

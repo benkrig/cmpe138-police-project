@@ -3,10 +3,10 @@ import path from "path";
 import bodyParser from "body-parser";
 import { EmergencyRoute } from "../app/routes/emergency.route";
 import { EmployeeRoute } from "../app/routes/employee.route";
+import { EmergencyNoteRoute } from "../app/routes/emergency-note.route";
 
 const app = express();
 const router = express.Router();
-
 
 // CORS
 app.use((req, res, next) => {
@@ -40,7 +40,8 @@ app.use((err, req, res) => {
 
 EmployeeRoute.init(router);
 EmergencyRoute.init(router);
+EmergencyNoteRoute.init(router);
 
 export const ApiConfig = {
-  app: app,
+  app: app
 };
