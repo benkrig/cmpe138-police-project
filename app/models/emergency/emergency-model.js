@@ -1,4 +1,4 @@
-import { createEmergency, getAllEmergencies, updateEmergency } from "./query";
+import { createEmergency, getAllEmergencies, updateEmergency, assignLead, searchEmergency } from "./query";
 import { db } from "../../../config/database";
 
 export const emergencyModel = {
