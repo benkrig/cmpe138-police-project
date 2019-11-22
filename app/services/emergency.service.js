@@ -79,7 +79,7 @@ const searchEmergency = async (params) => {
     return {
       status: 200,
       data: {
-        s_emergencies: rows.map(row => {
+        emergencies: rows.map(row => {
           return {
             emergency_id: row.emergency_id,
             status: row.status,
