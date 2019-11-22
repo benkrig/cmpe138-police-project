@@ -16,7 +16,7 @@ export const selectEmployeeByUsername = (username) =>
 
 export const searchEmployee = (desired_search) =>
    `SELECT * FROM employee LEFT JOIN policeman on e_id = p_id WHERE fname LIKE '{desired_search}%'
-   OR (lname LIKE '{desired_search}%') OR (username LIKE '{desired_search}%')`;
+   OR (lname LIKE '{desired_search}%') OR (username LIKE '{desired_search}%') OR (zipcode LIKE "{desired_search}%")`; 
 
 export const updateEmployee = (eid, columns, values) => {
   return `UPDATE employee SET ${generateSet(columns, values)} WHERE e_id = ${eid}`;
