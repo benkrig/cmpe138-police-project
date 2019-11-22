@@ -65,9 +65,16 @@ const resolveEmergency = async params => {
     return { status: 500, error: e.toString() };
   }
 };
-
+const assignLead = async (params) => {
+  try {
+    return await emergencyModel.assignLead(params);
+  } catch (e) {
+    return { status: 500, error: "there was a problem" };
+  }
+};
 export const emergencyService = {
   createEmergency: createEmergency,
   getEmergencies: getEmergencies,
-  resolveEmergency: resolveEmergency
+  resolveEmergency: resolveEmergency,
+  assignLead: assignLead
 };
