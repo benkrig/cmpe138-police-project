@@ -41,6 +41,14 @@ const assignLead = async (req, res) => {
   res.status(status).send(data);
 };
 
+const searchEmergency = async (req, res) => {
+    const params = {
+     desired_search: req.body.desired_search
+    };
+  const {data, status} = await emergencyService.searchEmergency(params);
+  res.status(status).send(data);
+};
+
 export const EmergencyRoute = {
   init: init
 };
