@@ -74,6 +74,15 @@ export const employeeModel = {
       console.log(e.toString());
     }
   },
+  searchEmployees: async params => {
+    try {
+      const { desired_search } = params;
+      return db.query(searchEmployees(params));
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
+    }
+  },
 
   getEmployeeByUsername: async params => {
     try {
