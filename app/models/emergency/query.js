@@ -14,7 +14,7 @@ export const readEmergency = emergencyId =>
   `SELECT * FROM emergency WHERE emergency_id = ${emergencyId}`;
 
 export const getAllEmergencies = () =>
-  `SELECT * FROM emergency LEFT JOIN employee on lead_responder = e_id`;
+  `SELECT * FROM emergency LEFT JOIN employee on lead_responder = e_id ORDER BY started_at DESC`;
 
 export const updateEmergency = (emergencyId, columns, values) =>
   `UPDATE emergency SET ${generateSet(
@@ -24,3 +24,22 @@ export const updateEmergency = (emergencyId, columns, values) =>
 
 export const deleteEmergency = emergencyId => `DELETE FROM emergency \
   WHERE emergency_id = ${emergencyId}`;
+
+export const jsonToSQL = param => {
+  switch (param) {
+    case "emergencyId":
+      return "emergency_id";
+    case "status":
+      return "status";
+    case "zipCode":
+      return "zipcode";
+    case "startedAt":
+      return "started_at";
+    case "endedAt":
+      return "ended_at";
+    case "leadResponder":
+      return "lead_responder";
+    default:
+      return "NAN";
+  }
+};

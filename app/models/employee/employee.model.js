@@ -36,6 +36,7 @@ export const employeeModel = {
       throw e;
     }
   },
+
   updateEmployee: async params => {
     try {
       const { eid } = params;
@@ -57,6 +58,7 @@ export const employeeModel = {
       throw e;
     }
   },
+
   getEmployees: async () => {
     try {
       return db.query(selectAllEmployees());

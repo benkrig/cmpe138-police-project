@@ -1,4 +1,9 @@
-import { createEmergency, getAllEmergencies, updateEmergency } from "./query";
+import {
+  createEmergency,
+  getAllEmergencies,
+  updateEmergency,
+  jsonToSQL
+} from "./query";
 import { db } from "../../../config/database";
 
 export const emergencyModel = {
@@ -14,7 +19,7 @@ export const emergencyModel = {
       throw e;
     }
   },
-  getEmergencyCaseInProcessNum: async => {
+  getEmergencyCaseInProcessNum: async () => {
     try {
       return db.query(getEmergencyCaseInProcessNum());
     } catch (e) {
@@ -22,6 +27,29 @@ export const emergencyModel = {
       throw e;
     }
   },
+
+  updateEmergency: async params => {
+    try {
+      const { emergency_id } = params;
+
+      console.log(params);
+
+      const cols = [];
+      const vals = [];
+      Object.entries(params).forEach(([key, val]) => {
+        if (key !== "emergency_id" && val !== undefined) {
+          cols.push(jsonToSQL(key));
+          vals.push(val);
+        }
+      });
+
+      return db.query(updateEmergency(emergency_id, cols, vals));
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
+    }
+  },
+
   getEmergencies: async () => {
     try {
       return db.query(getAllEmergencies());
@@ -30,7 +58,7 @@ export const emergencyModel = {
       throw e;
     }
   },
-  getEmergencyCaseCompletedNum: async => {
+  getEmergencyCaseCompletedNum: async () => {
     try {
       return db.query(getEmergencyCaseCompletedNum());
     } catch (e) {

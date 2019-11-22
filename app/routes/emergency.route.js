@@ -6,6 +6,8 @@ const init = router => {
   router.route("/emergency").get(getEmergencies);
 
   router.route("/emergency-resolve").post(resolveEmergency);
+
+  router.route("/emergency").put(updateEmergency);
 };
 
 const createEmergency = async (req, res) => {
@@ -17,6 +19,17 @@ const createEmergency = async (req, res) => {
   };
 
   const { data, status } = await emergencyService.createEmergency(params);
+  res.status(status).send(data);
+};
+
+const updateEmergency = async (req, res) => {
+  const params = {
+    emergencyId: req.body.emergencyId,
+    leadResponder: req.body.leadResponder,
+    zipCode: req.body.zipCode
+  };
+
+  const { data, status } = await emergencyService.updateEmergency(params);
   res.status(status).send(data);
 };
 

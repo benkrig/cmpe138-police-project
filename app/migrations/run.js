@@ -4,15 +4,15 @@ const mysql = require("mysql");
 const Up = async () => {
   console.log("Running migration...");
 
-  const con = await mysql.createConnection({
+  const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root",
+    password: "root"
   });
 
-  await fs.readFile(__dirname + "/001_init.sql", "utf8", (err, sql) => {
+  fs.readFile(__dirname + "/001_init.sql", "utf8", (err, sql) => {
     const cleanSQL = sql.replace(/(\r\n|\n|\r|\t)/gm, " ");
-    cleanSQL.split(";").forEach((q) => {
+    cleanSQL.split(";").forEach(q => {
       if (q !== " ") {
         con.query(`${q};`, (error, rows) => {
           if (error) {
@@ -27,5 +27,5 @@ const Up = async () => {
 };
 
 export const Mig = {
-  Up: Up,
+  Up: Up
 };

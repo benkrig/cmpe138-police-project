@@ -48,6 +48,24 @@ const getEmergencies = async () => {
     return { status: 500, error: e.toString() };
   }
 };
+const updateEmergency = async params => {
+  try {
+    const rows = await emergencyModel.updateEmergency(params);
+
+    return {
+      status: 200,
+      data: {
+        emergency: {
+          emergencyId: params.emergencyId
+        },
+        message: "Emergency updated!"
+      }
+    };
+  } catch (e) {
+    console.log("emergency.service createEmergency", e);
+    return { status: 500, error: "there was a problem" };
+  }
+};
 
 const resolveEmergency = async params => {
   try {
@@ -69,5 +87,6 @@ const resolveEmergency = async params => {
 export const emergencyService = {
   createEmergency: createEmergency,
   getEmergencies: getEmergencies,
-  resolveEmergency: resolveEmergency
+  resolveEmergency: resolveEmergency,
+  updateEmergency: updateEmergency
 };
