@@ -41,6 +41,15 @@ const getEmployees = async (req, res) => {
   res.status(status).send(data);
 };
 
+const searchEmployees = async (req, res) => {
+  const params = {
+    desired_search: req.body.desired_search
+  };
+  const { data, status } = await employeeService.searchEmployees(params);
+  }
+  res.status(status).send(data);
+};
+
 const signIn = async (req, res) => {
   const params = {
     username: req.body.username,
