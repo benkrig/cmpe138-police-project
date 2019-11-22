@@ -56,7 +56,7 @@ export const emergencyModel = {
       throw e;
     }
   },
-  assignLead: async (params) => {
+  assignLead: async params => {
     try {
       const { leadResponder, emergencyId } = params;
       const { rows, err } = await db.query(assignLead(leadResponder, emergencyId));
@@ -66,7 +66,7 @@ export const emergencyModel = {
       throw e;
     }
   },
-  searchEmergency: async (params) => {
+  searchEmergency: async params => {
     try {
       const { desired_search} = params;
       return await db.query(searchEmergency(desired_search));
