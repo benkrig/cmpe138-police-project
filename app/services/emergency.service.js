@@ -72,9 +72,39 @@ const assignLead = async (params) => {
     return { status: 500, error: "there was a problem" };
   }
 };
+const searchEmergency = async (params) => {
+  try {
+    const rows = await emergencyModel.searchEmergency(params);
+
+    return {
+      status: 200,
+      data: {
+        s_emergencies: rows.map(row => {
+          return {
+            emergency_id: row.emergency_id,
+            status: row.status,
+            zipcode: row.zipcode,
+            started_at: row.started_at,
+            ended_at: row.ended_at,
+            lead_responder: {
+              e_id: row.lead_responder,
+              fname: row.fname,
+              lname: row.lname
+            }
+          };
+        })
+      }
+    };
+  } catch (e) {
+    console.log("emergency.service searchEmergency", e);
+    return { status: 500, error: e.toString() };
+  }
+};
+
 export const emergencyService = {
   createEmergency: createEmergency,
   getEmergencies: getEmergencies,
   resolveEmergency: resolveEmergency,
-  assignLead: assignLead
+  assignLead: assignLead,
+  searchEmergency: searchEmergency
 };
