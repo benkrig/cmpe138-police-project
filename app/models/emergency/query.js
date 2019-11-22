@@ -29,5 +29,5 @@ export const assignLead = (leadResponder, emergencyID) =>
   `UPDATE emergency SET lead_responder = ${leadResponder} WHERE emergency_id = ${emergencyID}`;
 
 export const searchEmergency = (desired_search) =>
-    `SELECT * FROM emergency WHERE (CAST(emergency_id as CHAR) LIKE '${desired_search}%') OR (status LIKE '${desired_search}%')
+    `SELECT * FROM emergency LEFT JOIN employee on lead_responder = e_id WHERE (CAST(emergency_id as CHAR) LIKE '${desired_search}%') OR (status LIKE '${desired_search}%')
     OR (CAST(lead_responder as CHAR) LIKE '${desired_search}%') OR (zipcode LIKE '${desired_search}%')`;
