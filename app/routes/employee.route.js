@@ -11,7 +11,8 @@ const init = (router) => {
 
   // Get
   router.route("/employee").get(getEmployees); // Retrieve ALL employees
-
+  
+  router.route("/employee-search").get(searchEmployees);
   // Put
   router.route("/employee").put(updateEmployee);
 
@@ -43,7 +44,7 @@ const getEmployees = async (req, res) => {
 
 const searchEmployees = async (req, res) => {
   const params = {
-    desired_search: req.body.desired_search
+    desired_search: req.query.desired_search
   };
   const { data, status } = await employeeService.searchEmployees(params);
   }
