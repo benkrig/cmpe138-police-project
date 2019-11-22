@@ -32,6 +32,14 @@ const resolveEmergency = async (req, res) => {
   const { data, status } = await emergencyService.resolveEmergency(params);
   res.status(status).send(data);
 };
+const assignLead = async (req, res) => {
+  const params = {
+    leadResponder: req.body.leadResponder,
+    emergencyId: req.body.emergencyId
+  };
+  const {data, status} = await emergencyService.assignLead(params);
+  res.status(status).send(data);
+};
 
 export const EmergencyRoute = {
   init: init
