@@ -56,15 +56,23 @@ export const emergencyModel = {
       throw e;
     }
   },
-    assignLead: async (params) => {
-      try {
-        const { leadResponder, emergencyId } = params;
-
-        const { rows, err } = await db.query(assignLead(leadResponder, emergencyId));
-        return { rows, err };
-      } catch (e) {
-        console.log(e.toString());
-        throw e;
-      }
+  assignLead: async (params) => {
+    try {
+      const { leadResponder, emergencyId } = params;
+      const { rows, err } = await db.query(assignLead(leadResponder, emergencyId));
+      return { rows, err };
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
     }
+  },
+  searchEmergency: async (params) => {
+    try {
+      const { desired_search} = params;
+      return await db.query(searchEmergency(desired_search));
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
+    }
+  }
 };
