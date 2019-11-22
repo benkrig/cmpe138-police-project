@@ -3,7 +3,8 @@ import {
   jsonToSQL,
   selectAllEmployees,
   selectEmployeeByUsername,
-  updateEmployee
+  updateEmployee,
+  searchEmployees
 } from "./query";
 import { db } from "../../../config/database";
 
