@@ -4,6 +4,10 @@ const init = router => {
   router.route("/emergency").post(createEmergency);
 
   router.route("/emergency").get(getEmergencies);
+  
+  router.route("/emergency-search").get(searchEmergency);
+
+  router.route("/emergency-assign-lead").post(assignLead);
 
   router.route("/emergency-resolve").post(resolveEmergency);
 };
@@ -30,6 +34,22 @@ const resolveEmergency = async (req, res) => {
     emergency_id: req.body.emergencyId
   };
   const { data, status } = await emergencyService.resolveEmergency(params);
+  res.status(status).send(data);
+};
+const assignLead = async (req, res) => {
+  const params = {
+    leadResponder: req.body.leadResponder,
+    emergencyId: req.body.emergencyId
+  };
+  const {data, status} = await emergencyService.assignLead(params);
+  res.status(status).send(data);
+};
+
+const searchEmergency = async (req, res) => {
+    const params = {
+     desired_search: req.query.desired_search
+    };
+  const {data, status} = await emergencyService.searchEmergency(params);
   res.status(status).send(data);
 };
 
