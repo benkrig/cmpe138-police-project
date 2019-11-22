@@ -2,6 +2,8 @@ import {
   createEmergency,
   getAllEmergencies,
   updateEmergency,
+  assignLead,
+  searchEmergency,
   jsonToSQL
 } from "./query";
 import { db } from "../../../config/database";
@@ -81,6 +83,25 @@ export const emergencyModel = {
       return db.query(updateEmergency(emergency_id, cols, vals));
     } catch (e) {
       console.log(e);
+      throw e;
+    }
+  },
+  assignLead: async params => {
+    try {
+      const { leadResponder, emergencyId } = params;
+      const { rows, err } = db.query(assignLead(leadResponder, emergencyId));
+      return { rows, err };
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
+    }
+  },
+  searchEmergency: async params => {
+    try {
+      const { desired_search } = params;
+      return db.query(searchEmergency(desired_search));
+    } catch (e) {
+      console.log(e.toString());
       throw e;
     }
   }

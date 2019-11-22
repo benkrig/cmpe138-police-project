@@ -86,6 +86,27 @@ const getEmployee = async (params) => {
   }
 };
 
+const searchEmployees = async (params) => {
+  try {
+    const rows = await employeeModel.searchEmployees(params);
+    console.log(rows);
+
+    rows.forEach((row) => {
+      delete row.password;
+      return row;
+    });
+
+    return {
+      status: 200,
+      data: {
+        employees: rows,
+      },
+    };
+  } catch (e) {
+    return { status: 500, data: { employees: {}, error: e.toString() } };
+  }
+};
+
 const signIn = async (params) => {
   try {
     // validate employee exists
@@ -124,6 +145,7 @@ export const employeeService = {
   createEmployee: createEmployee,
   getEmployees: getEmployees, // retrieve ALL employees (MANY)
   getEmployee: getEmployee, // retrieve SPECIFIC employee (1)
+  searchEmployees: searchEmployees,
   signIn: signIn,
   updateEmployee: updateEmployee,
 };

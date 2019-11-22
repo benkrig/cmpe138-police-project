@@ -25,6 +25,13 @@ export const updateEmergency = (emergencyId, columns, values) =>
 export const deleteEmergency = emergencyId => `DELETE FROM emergency \
   WHERE emergency_id = ${emergencyId}`;
 
+export const assignLead = (leadResponder, emergencyID) =>
+  `UPDATE emergency SET lead_responder = ${leadResponder} WHERE emergency_id = ${emergencyID}`;
+
+export const searchEmergency = desired_search =>
+  `SELECT * FROM emergency LEFT JOIN employee on lead_responder = e_id WHERE (CAST(emergency_id as CHAR) LIKE '${desired_search}%') OR (status LIKE '${desired_search}%')
+    OR (CAST(lead_responder as CHAR) LIKE '${desired_search}%') OR (zipcode LIKE '${desired_search}%')`;
+
 export const jsonToSQL = param => {
   switch (param) {
     case "emergencyId":

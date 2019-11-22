@@ -3,7 +3,8 @@ import {
   jsonToSQL,
   selectAllEmployees,
   selectEmployeeByUsername,
-  updateEmployee
+  updateEmployee,
+  searchEmployees
 } from "./query";
 import { db } from "../../../config/database";
 
@@ -74,6 +75,15 @@ export const employeeModel = {
       return db.query(getEmplyeeCount());
     } catch (e) {
       console.log(e.toString());
+    }
+  },
+  searchEmployees: async params => {
+    try {
+      const { desired_search } = params;
+      return db.query(searchEmployees(params));
+    } catch (e) {
+      console.log(e.toString());
+      throw e;
     }
   },
 
