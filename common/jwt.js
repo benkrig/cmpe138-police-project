@@ -2,11 +2,12 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "super_secret";
 
-export const generateJWTToken = (userData) =>{
+export const generateJWTToken = userData => {
+  console.log("here");
   return jwt.sign(userData, JWT_SECRET);
 };
 
-export const verifyToken = (jwtToken) => {
+export const verifyToken = jwtToken => {
   try {
     return jwt.verify(jwtToken, JWT_SECRET);
   } catch (e) {
@@ -15,7 +16,7 @@ export const verifyToken = (jwtToken) => {
   }
 };
 
-export const getToken = (headers) => {
+export const getToken = headers => {
   if (
     headers.authorization &&
     headers.authorization.split(" ")[0] === "Bearer"

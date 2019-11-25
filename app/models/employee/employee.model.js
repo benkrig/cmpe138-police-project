@@ -4,7 +4,8 @@ import {
   selectAllEmployees,
   selectEmployeeByUsername,
   updateEmployee,
-  searchEmployees
+  searchEmployee,
+  getEmployeeCount, createPoliceman,
 } from "./query";
 import { db } from "../../../config/database";
 
@@ -18,11 +19,12 @@ export const employeeModel = {
         type,
         username,
         password,
-        phone
+        phone,
+        zipCode,
       } = params;
-
-      return db.query(
-        createEmployee(
+      db.query("START TRANSACTION");
+      if (type === "POLICE_OFFICER") {
+        console.log(createEmployee(
           firstName,
           lastName,
           dob,
@@ -31,30 +33,73 @@ export const employeeModel = {
           password,
           phone
         )
-      );
+        );
+        const rows = await db.query(
+          createEmployee(
+            firstName,
+            lastName,
+            dob,
+            type,
+            username,
+            password,
+            phone
+          )
+        );
+        console.log(createPoliceman(rows.insertId, zipCode));
+        await db.query(createPoliceman(rows.insertId, zipCode));
+        db.query("COMMIT");
+        return rows;
+      } else {
+        console.log(createEmployee(
+          firstName,
+          lastName,
+          dob,
+          type,
+          username,
+          password,
+          phone
+        )
+        );
+        const rows = db.query(
+          createEmployee(
+            firstName,
+            lastName,
+            dob,
+            type,
+            username,
+            password,
+            phone
+          )
+        );
+        db.query("COMMIT");
+        return rows;
+      }
     } catch (e) {
-      console.log(e.toString());
+      db.query("ROLLBACK");
+      console.log("ROLLBACK", e.toString());
       throw e;
     }
   },
 
   updateEmployee: async params => {
     try {
-      const { eid } = params;
+      const { eid, zipCode } = params;
 
       console.log(params);
 
       const cols = [];
       const vals = [];
       Object.entries(params).forEach(([key, val]) => {
-        if (key !== "eid" && val !== undefined) {
+        if (key !== "eid" && key !== "zipCode" && val !== undefined) {
           cols.push(jsonToSQL(key));
           vals.push(val);
         }
       });
 
-      return db.query(updateEmployee(eid, cols, vals));
+      console.log(updateEmployee(eid, zipCode, cols, vals));
+      return db.query(updateEmployee(eid, zipCode, cols, vals));
     } catch (e) {
+      db.query("ROLLBACK");
       console.log(e.toString());
       throw e;
     }
@@ -62,6 +107,7 @@ export const employeeModel = {
 
   getEmployees: async () => {
     try {
+      console.log(selectAllEmployees());
       return db.query(selectAllEmployees());
     } catch (e) {
       console.log(e.toString());
@@ -72,15 +118,17 @@ export const employeeModel = {
   // from the employee query.js call the
   getEmployeeCountNumber: async () => {
     try {
-      return db.query(getEmplyeeCount());
+      console.log(getEmployeeCount());
+      return db.query(getEmployeeCount());
     } catch (e) {
       console.log(e.toString());
     }
   },
   searchEmployees: async params => {
     try {
-      const { desired_search } = params;
-      return db.query(searchEmployees(params));
+      const { desired_search, type, zip } = params;
+      console.log(searchEmployee(desired_search, type, zip));
+      return db.query(searchEmployee(desired_search, type, zip));
     } catch (e) {
       console.log(e.toString());
       throw e;
@@ -90,11 +138,11 @@ export const employeeModel = {
   getEmployeeByUsername: async params => {
     try {
       const { username } = params;
-
+      console.log(selectEmployeeByUsername(username));
       return db.query(selectEmployeeByUsername(username));
     } catch (e) {
       console.log(e.toString());
       throw e;
     }
-  }
+  },
 };

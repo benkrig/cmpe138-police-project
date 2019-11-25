@@ -9,6 +9,7 @@ const DB = mysql.createPool({
   user: "root",
   password: "root",
   database: Database,
+  multipleStatements: true,
 });
 
 DB.query = util.promisify(DB.query);

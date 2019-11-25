@@ -5,12 +5,12 @@ const init = router => {
   // Post
   router
     .route("/emergency-note")
-    .post(authenticate("CALL_OPERATOR"), createEmergencyNote);
+    .post(authenticate(["CALL_OPERATOR", "POLICE_OFFICER"]), createEmergencyNote);
 
   // Get
   router
     .route("/emergency-note")
-    .get(/*authenticate("CALL_OPERATOR"),*/ getEmergencyNotes);
+    .get(authenticate(["CALL_OPERATOR", "POLICE_OFFICER"]), getEmergencyNotes);
 };
 
 const createEmergencyNote = async (req, res) => {

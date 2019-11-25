@@ -20,9 +20,9 @@ const createEmergency = async params => {
   }
 };
 
-const getEmergencies = async () => {
+const getEmergencies = async params => {
   try {
-    const rows = await emergencyModel.getEmergencies();
+    const rows = await emergencyModel.getEmergencies(params);
 
     return {
       status: 200,
@@ -45,7 +45,7 @@ const getEmergencies = async () => {
     };
   } catch (e) {
     console.log("emergency.service getEmergencies", e);
-    return { status: 500, error: e.toString() };
+    return { status: 500, data: {}, error: e.toString() };
   }
 };
 const updateEmergency = async params => {
@@ -80,16 +80,40 @@ const resolveEmergency = async params => {
     };
   } catch (e) {
     console.log("emergency.service resolveEmergency", e);
-    return { status: 500, error: e.toString() };
+    return { status: 500, data: {}, error: e.toString() };
   }
 };
+
 const assignLead = async params => {
   try {
-    return await emergencyModel.assignLead(params);
+    await emergencyModel.assignLead(params);
+
+    return {
+      status: 200,
+      data: {
+        msg: "Lead responder assigned.",
+      },
+    };
   } catch (e) {
     return { status: 500, error: "there was a problem" };
   }
 };
+
+const assignResponder = async params => {
+  try {
+    await emergencyModel.assignResponder(params);
+
+    return {
+      status: 200,
+      data: {
+        msg: "Responder assigned.",
+      },
+    };
+  } catch (e) {
+    return { status: 500, data: {}, error: "there was a problem" };
+  }
+};
+
 const searchEmergency = async params => {
   try {
     const rows = await emergencyModel.searchEmergency(params);
@@ -119,11 +143,44 @@ const searchEmergency = async params => {
   }
 };
 
+const getEmergency = async params => {
+  try {
+    const rows = await emergencyModel.getEmergencyResponders(params);
+    console.log(rows);
+
+    const responders = rows.map(row => ({
+      fname: row.fname,
+      lname: row.lname,
+      zipcode: row.zipcode,
+      username: row.username,
+      started: row.started,
+      e_id: row.e_id
+    }));
+
+    return {
+      status: 200,
+      data: {
+        emergency: { emergency_id: params.eid,
+          zipcode: rows.length ? rows[0].zipcode : "",
+          started_at: rows.length ? rows[0].started_at : "",
+          ended_at: rows.length ? rows[0].ended_at : "",
+        },
+        responders
+      }
+    };
+  } catch (e) {
+    console.log("emergency.service searchEmergency", e);
+    return { status: 500, error: e.toString() };
+  }
+};
+
 export const emergencyService = {
   createEmergency: createEmergency,
   getEmergencies: getEmergencies,
   resolveEmergency: resolveEmergency,
   assignLead: assignLead,
+  assignResponder: assignResponder,
   searchEmergency: searchEmergency,
-  updateEmergency: updateEmergency
+  updateEmergency: updateEmergency,
+  getEmergency: getEmergency
 };

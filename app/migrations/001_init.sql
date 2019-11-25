@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS emergency_responder(
     emergency_id    INTEGER NOT NULL,
     e_id            INTEGER NOT NULL,
     started         DATETIME NOT NULL,
+    PRIMARY KEY (emergency_id, e_id),
     FOREIGN KEY	(emergency_id) REFERENCES emergency(emergency_id),
     FOREIGN KEY	(e_id) REFERENCES employee(e_id)
 );

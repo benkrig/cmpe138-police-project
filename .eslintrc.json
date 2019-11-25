@@ -33,6 +33,16 @@
         }],
         "quotes": ["error", "double"],
         "object-curly-spacing": ["error", "always"],
-        "new-cap": ["error", { "properties": false }]
+        "new-cap": ["error", { "properties": false }],
+        // Indent with 4 spaces
+        "indent": ["error", 2],
+
+        // Indent JSX with 4 spaces
+        "react/jsx-indent": ["error", 2],
+
+        // Indent props with 4 spaces
+        "react/jsx-indent-props": ["error", 2],
+        "arrow-parens": ["error","as-needed"],
+        "comma-dangle": "off"
     }
 }
