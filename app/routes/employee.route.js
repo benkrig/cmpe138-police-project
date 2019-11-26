@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { encryptPassword } from "../../common/hash";
 import { employeeService } from "../services/employee.service";
 import { authenticate } from "../middleware/auth-mw";
@@ -51,7 +53,7 @@ const searchEmployees = async (req, res) => {
   const params = {
     desired_search: req.query.desired_search,
     zip: req.query.zip,
-    type: req.query.type,
+    type: req.query.type
   };
   const { data, status } = await employeeService.searchEmployees(params);
   res.status(status).send(data);

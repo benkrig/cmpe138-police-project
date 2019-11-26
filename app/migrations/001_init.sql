@@ -1,3 +1,6 @@
+-- // SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
+
 CREATE DATABASE IF NOT EXISTS PoliceReport;
 
 USE PoliceReport;

@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import {
   createEmployee,
   jsonToSQL,
@@ -5,7 +7,8 @@ import {
   selectEmployeeByUsername,
   updateEmployee,
   searchEmployee,
-  getEmployeeCount, createPoliceman,
+  getEmployeeCount,
+  createPoliceman
 } from "./query";
 import { db } from "../../../config/database";
 
@@ -20,19 +23,20 @@ export const employeeModel = {
         username,
         password,
         phone,
-        zipCode,
+        zipCode
       } = params;
       db.query("START TRANSACTION");
       if (type === "POLICE_OFFICER") {
-        console.log(createEmployee(
-          firstName,
-          lastName,
-          dob,
-          type,
-          username,
-          password,
-          phone
-        )
+        console.log(
+          createEmployee(
+            firstName,
+            lastName,
+            dob,
+            type,
+            username,
+            password,
+            phone
+          )
         );
         const rows = await db.query(
           createEmployee(
@@ -50,15 +54,16 @@ export const employeeModel = {
         db.query("COMMIT");
         return rows;
       } else {
-        console.log(createEmployee(
-          firstName,
-          lastName,
-          dob,
-          type,
-          username,
-          password,
-          phone
-        )
+        console.log(
+          createEmployee(
+            firstName,
+            lastName,
+            dob,
+            type,
+            username,
+            password,
+            phone
+          )
         );
         const rows = db.query(
           createEmployee(
@@ -144,5 +149,5 @@ export const employeeModel = {
       console.log(e.toString());
       throw e;
     }
-  },
+  }
 };

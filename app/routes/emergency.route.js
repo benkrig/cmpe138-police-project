@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { emergencyService } from "../services/emergency.service";
 
 const init = router => {
@@ -5,7 +7,6 @@ const init = router => {
 
   router.route("/emergency").get(getEmergencies);
   router.route("/emergency-detail").get(getEmergency);
-
 
   router.route("/emergency-search").get(searchEmergency);
 

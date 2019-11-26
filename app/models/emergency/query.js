@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { generateSet } from "../util";
 
 export const createEmergency = (status, leadResponder, zipcode) =>
@@ -32,7 +34,6 @@ export const resolveEmergency = emergencyId =>
                 WHERE e_id = p_id 
                 AND emergency_id = ${emergencyId});
   COMMIT`;
-
 
 export const assignLead = (leadResponder, emergencyID) =>
   `START TRANSACTION;
@@ -79,19 +80,19 @@ export const getResponders = eid =>
 
 export const jsonToSQL = param => {
   switch (param) {
-  case "emergencyId":
-    return "emergency_id";
-  case "status":
-    return "status";
-  case "zipCode":
-    return "zipcode";
-  case "startedAt":
-    return "started_at";
-  case "endedAt":
-    return "ended_at";
-  case "leadResponder":
-    return "lead_responder";
-  default:
-    return "NAN";
+    case "emergencyId":
+      return "emergency_id";
+    case "status":
+      return "status";
+    case "zipCode":
+      return "zipcode";
+    case "startedAt":
+      return "started_at";
+    case "endedAt":
+      return "ended_at";
+    case "leadResponder":
+      return "lead_responder";
+    default:
+      return "NAN";
   }
 };

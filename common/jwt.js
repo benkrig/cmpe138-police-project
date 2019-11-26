@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "super_secret";

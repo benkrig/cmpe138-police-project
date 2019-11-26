@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { generateSet } from "../util";
 
 export const createEmployee = (
@@ -12,9 +14,11 @@ export const createEmployee = (
   VALUES ('${firstName}', '${lastName}', '${dob}', '${type}', '${username}', \
   '${password}', '${phone}')`;
 
-export const createPoliceman = (employeeId, zipCode) => `INSERT INTO policeman(p_id, status, zipcode) 
+export const createPoliceman = (
+  employeeId,
+  zipCode
+) => `INSERT INTO policeman(p_id, status, zipcode) 
   VALUES (${employeeId}, 'FREE', '${zipCode}');`;
-
 
 export const selectAllEmployees = () =>
   "SELECT * FROM employee LEFT JOIN policeman on e_id = p_id";
@@ -60,28 +64,29 @@ export const searchEmployee = (q, type, zip) => {
 
 export const updateEmployee = (eid, zipCode, columns, values) => {
   return `START TRANSACTION; \
-  UPDATE employee SET ${generateSet(
-    columns,
-    values
-  )} WHERE e_id = ${eid}; \
-  ${zipCode ? `UPDATE policeman SET zipcode = ${zipCode} WHERE p_id = ${eid}; COMMIT;` : "COMMIT;"}`;
+  UPDATE employee SET ${generateSet(columns, values)} WHERE e_id = ${eid}; \
+  ${
+    zipCode
+      ? `UPDATE policeman SET zipcode = ${zipCode} WHERE p_id = ${eid}; COMMIT;`
+      : "COMMIT;"
+  }`;
 };
 
 export const jsonToSQL = param => {
   switch (param) {
-  case "firstName":
-    return "fname";
-  case "lastName":
-    return "lname";
-  case "dob":
-    return "dob";
-  case "type":
-    return "type";
-  case "password":
-    return "password";
-  case "phone":
-    return "phone";
-  default:
-    return "NAN";
+    case "firstName":
+      return "fname";
+    case "lastName":
+      return "lname";
+    case "dob":
+      return "dob";
+    case "type":
+      return "type";
+    case "password":
+      return "password";
+    case "phone":
+      return "phone";
+    default:
+      return "NAN";
   }
 };

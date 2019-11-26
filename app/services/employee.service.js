@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { employeeModel } from "../models/employee/employee.model";
 import { checkPassword } from "../../common/hash";
 import { generateJWTToken } from "../../common/jwt";
@@ -30,7 +32,7 @@ const updateEmployee = async params => {
     return {
       status: 200,
       data: {
-        employee: { },
+        employee: {},
         message: "Employee updated!"
       }
     };

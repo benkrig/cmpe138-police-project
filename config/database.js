@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import mysql from "mysql";
 import util from "util";
 
@@ -9,7 +11,7 @@ const DB = mysql.createPool({
   user: "root",
   password: "root",
   database: Database,
-  multipleStatements: true,
+  multipleStatements: true
 });
 
 DB.query = util.promisify(DB.query);

@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { emergencyNoteService } from "../services/emergency-note.service";
 import { authenticate } from "../middleware/auth-mw";
 
@@ -5,7 +7,10 @@ const init = router => {
   // Post
   router
     .route("/emergency-note")
-    .post(authenticate(["CALL_OPERATOR", "POLICE_OFFICER"]), createEmergencyNote);
+    .post(
+      authenticate(["CALL_OPERATOR", "POLICE_OFFICER"]),
+      createEmergencyNote
+    );
 
   // Get
   router

@@ -1,3 +1,4 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
 
 // Returns a string in the format: "column[i] = value[i] for each column and value"
 export const generateSet = (columns, values) => {

@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { emergencyModel } from "../models/emergency/emergency-model.js";
 
 const createEmergency = async params => {
@@ -91,8 +93,8 @@ const assignLead = async params => {
     return {
       status: 200,
       data: {
-        msg: "Lead responder assigned.",
-      },
+        msg: "Lead responder assigned."
+      }
     };
   } catch (e) {
     return { status: 500, error: "there was a problem" };
@@ -106,8 +108,8 @@ const assignResponder = async params => {
     return {
       status: 200,
       data: {
-        msg: "Responder assigned.",
-      },
+        msg: "Responder assigned."
+      }
     };
   } catch (e) {
     return { status: 500, data: {}, error: "there was a problem" };
@@ -160,10 +162,11 @@ const getEmergency = async params => {
     return {
       status: 200,
       data: {
-        emergency: { emergency_id: params.eid,
+        emergency: {
+          emergency_id: params.eid,
           zipcode: rows.length ? rows[0].zipcode : "",
           started_at: rows.length ? rows[0].started_at : "",
-          ended_at: rows.length ? rows[0].ended_at : "",
+          ended_at: rows.length ? rows[0].ended_at : ""
         },
         responders
       }

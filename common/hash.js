@@ -1,6 +1,8 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import bcrypt from "bcrypt";
 
-export const encryptPassword = async (plainTextPassword) => {
+export const encryptPassword = async plainTextPassword => {
   const password = plainTextPassword;
   const saltRounds = 10;
 

@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { createEmergencyNote, readEmergencyNote } from "./query";
 import { db } from "../../../config/database";
 

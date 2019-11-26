@@ -1,3 +1,5 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import {
   createEmergency,
   getAllEmergencies,
@@ -6,7 +8,12 @@ import {
   searchEmergency,
   jsonToSQL,
   getEmergencyCaseCompletedNum,
-  getEmergencyCaseInProcessNum, resolveEmergency, getResponders, assignResponder, searchMyEmergency, getMyEmergencies,
+  getEmergencyCaseInProcessNum,
+  resolveEmergency,
+  getResponders,
+  assignResponder,
+  searchMyEmergency,
+  getMyEmergencies
 } from "./query";
 import { db } from "../../../config/database";
 
@@ -87,7 +94,7 @@ export const emergencyModel = {
     } catch (e) {
       console.log(e);
       db.query("ROLLBACK");
-      throw (e);
+      throw e;
     }
   },
   assignLead: async params => {
@@ -137,5 +144,5 @@ export const emergencyModel = {
       console.log(e.toString());
       throw e;
     }
-  },
+  }
 };

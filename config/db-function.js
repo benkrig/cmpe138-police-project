@@ -1,10 +1,12 @@
+// SJSU CMPE 138Fall2019 TEAM13import { ApiConfig } from "./config/api-config";
+
 import { db } from "./database";
 
 const connectionCheck = async () => {
   return db.getConnection((err, connection) => {
     if (err) {
       if (connection) connection.release();
-      throw (err);
+      throw err;
     } else {
       return "success";
     }
@@ -12,12 +14,12 @@ const connectionCheck = async () => {
 };
 
 const connectionRelease = () => {
-  db.on("release", (connection) => {
+  db.on("release", connection => {
     console.log("Connection %d released", connection.threadId);
   });
 };
 
 export const dbFunc = {
   connectionCheck: connectionCheck,
-  connectionRelease: connectionRelease,
+  connectionRelease: connectionRelease
 };
